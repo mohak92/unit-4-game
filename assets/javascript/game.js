@@ -3,8 +3,8 @@ $( document ).ready(function() {
     var playerSelected;
     var defenderSelected;
     var gamePlaying = false;
-    var currentPlayer;
-    var defendingPlayer;
+    var currentPlayer = {};
+    var defendingPlayer = {};
     var totalDefeted;
 
     class Character {
@@ -25,11 +25,17 @@ $( document ).ready(function() {
     var thor = new Character("Thor", 175, 15, 15);
 
     function initMyPlayer(mySelectedPlayer){
-
+        currentPlayer.name = mySelectedPlayer.name;
+        currentPlayer.healthPoints = mySelectedPlayer.healthPoints;
+        currentPlayer.attackPower = mySelectedPlayer.attackPower;
+        currentPlayer.counterAttackPower = mySelectedPlayer.counterAttackPower;
     }
 
-    function imitMyCurrentEnemy(mySelectedEnemy){
-
+    function initMyCurrentEnemy(mySelectedEnemy){
+        defendingPlayer.name = mySelectedEnemy.name;
+        defendingPlayer.healthPoints = mySelectedEnemy.healthPoints;
+        defendingPlayer.attackPower = mySelectedEnemy.attackPower;
+        defendingPlayer.counterAttackPower= mySelectedEnemy.counterAttackPower;
     }
 
     function moveToCharacter(playerID){
@@ -47,30 +53,68 @@ $( document ).ready(function() {
         $("#enemies-available").append($(".enemy-character"));
     }
 
+    function moveToDefender(playerID){
+        $(playerID).removeClass("enemy-character").addClass("defender-character");
+        $("#defender-section").append($(".defender-character"));
+        defenderSelected = true;
+    }
+
     $("#restart").hide();
 
     $("#captain-america").on("click", function () {
-        moveToCharacter("#captain-america");
-        moveToEnemies();
-        initMyPlayer(captainAmerica);
+        if(!playerSelected){
+            moveToCharacter("#captain-america");
+            moveToEnemies();
+            initMyPlayer(captainAmerica);
+        } else if(playerSelected == true && !defenderSelected) {
+            if($("#captain-america").hasClass("enemy-character")) {
+                console.log("Defender selcted");
+                initMyCurrentEnemy(captainAmerica);
+                moveToDefender("#captain-america");
+            }
+        }
     });
-
+    
     $("#hulk").on("click", function () {
-        moveToCharacter("#hulk");
-        moveToEnemies();
-        initMyPlayer(hulk);
+        if(!playerSelected){
+            moveToCharacter("#hulk");
+            moveToEnemies();
+            initMyPlayer(hulk);
+        } else if(playerSelected == true && !defenderSelected) {
+            if($("#hulk").hasClass("enemy-character")) {
+                console.log("Defender selcted");
+                initMyCurrentEnemy(hulk);
+                moveToDefender("#hulk");
+            }
+        }
     });
-
+    
     $("#iron-man").on("click", function () {
-        moveToCharacter("#iron-man");
-        moveToEnemies();
-        initMyPlayer(ironMan);
+        if(!playerSelected){
+            moveToCharacter("#iron-man");
+            moveToEnemies();
+            initMyPlayer(ironMan);
+        } else if(playerSelected == true && !defenderSelected) {
+            if($("#iron-man").hasClass("enemy-character")) {
+                console.log("Defender selcted");
+                initMyCurrentEnemy(ironMan);
+                moveToDefender("#iron-man");
+            }
+        }
     });
 
     $("#thor").on("click", function () {
-        moveToCharacter("#thor");
-        moveToEnemies();
-        initMyPlayer(thor);
+        if(!playerSelected){
+            moveToCharacter("#thor");
+            moveToEnemies();
+            initMyPlayer(thor);
+        } else if(playerSelected == true && !defenderSelected) {
+            if($("#thor").hasClass("enemy-character")) {
+                console.log("Defender selcted");
+                initMyCurrentEnemy(thor);
+                moveToDefender("#thor");
+            }
+        }
     });
 
 });
