@@ -1,5 +1,11 @@
 $( document ).ready(function() {
-    console.log( "ready!" );
+
+    var playerSelected;
+    var defenderSelected;
+    var gamePlaying = false;
+    var currentPlayer;
+    var defendingPlayer;
+    var totalDefeted;
 
     class Character {
         constructor(name, healthPoints, attackPower, counterAttackPower) {
@@ -10,17 +16,61 @@ $( document ).ready(function() {
         }
     }
 
-    player1 = new Character(120, incrementAttack(6), 20);
+    var captainAmerica = new Character("Captain Aerica", 120, 8, 8);
 
-    player2 = new Character(120, incrementAttack(6), 20);
+    var hulk = new Character("Hulk", 180, 5, 5);
 
-    player3 = new Character(120, incrementAttack(6), 20);
+    var ironMan = new Character("Iron Man", 125, 20, 20);
 
-    player4 = new Character(120, incrementAttack(6), 20);
+    var thor = new Character("Thor", 175, 15, 15);
 
-    function incrementAttack(attackPower){
-        return attackPower += attackPower;
+    function initMyPlayer(mySelectedPlayer){
+
     }
 
-    //console.log(incrementAttack(6));
+    function imitMyCurrentEnemy(mySelectedEnemy){
+
+    }
+
+    function moveToCharacter(playerID){
+        if(!playerSelected){
+            console.log("inside movecharacter if");
+            console.log(playerID);
+            var mySelection =  $(playerID).removeClass("character-selection").addClass("character-selected");
+            $("#charcater-selected").append(mySelection);
+            playerSelected = true;
+        }
+    }
+
+    function moveToEnemies(){
+        $(".character-selection").removeClass("character-selection").addClass("enemy-character");
+        $("#enemies-available").append($(".enemy-character"));
+    }
+
+    $("#restart").hide();
+
+    $("#captain-america").on("click", function () {
+        moveToCharacter("#captain-america");
+        moveToEnemies();
+        initMyPlayer(captainAmerica);
+    });
+
+    $("#hulk").on("click", function () {
+        moveToCharacter("#hulk");
+        moveToEnemies();
+        initMyPlayer(hulk);
+    });
+
+    $("#iron-man").on("click", function () {
+        moveToCharacter("#iron-man");
+        moveToEnemies();
+        initMyPlayer(ironMan);
+    });
+
+    $("#thor").on("click", function () {
+        moveToCharacter("#thor");
+        moveToEnemies();
+        initMyPlayer(thor);
+    });
+
 });

@@ -5,6 +5,8 @@
 
 body {
     background: url(../images/avengers.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
 .game-title {
@@ -23,7 +25,8 @@ section {
     border-color: green;
     border-style: solid;
     text-align: center;
-    color: white;
+    color: black;
+    background: white;
 }
 
 img {
