@@ -39,6 +39,14 @@ h3 {
     color: white;
 }
 
-.your-character {
-    height: 200px;
+#charcater-selected {
+    height: 240px;
+}
+
+.enemy-character {
+    background: red;
+}
+
+#game-message {
+    color: white;
 }
