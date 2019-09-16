@@ -24,6 +24,20 @@ $( document ).ready(function() {
 
     var thor = new Character("Thor", 175, 15, 15);
 
+    function initGame() {
+        playerSelected = undefined;
+        defenderSelected = undefined;
+        gamePlaying = false;
+        currentPlayer = {};
+        defendingPlayer = {};
+        totalDefeted;
+
+        $(".character").removeClass("character-selected enemy-character defender-character").addClass("character-selection");
+        $("#my-characters").html($(".character-selection").show());
+
+        $("#restart").hide();
+    }
+
     function initMyPlayer(mySelectedPlayer){
         currentPlayer.name = mySelectedPlayer.name;
         currentPlayer.healthPoints = mySelectedPlayer.healthPoints;
@@ -115,6 +129,14 @@ $( document ).ready(function() {
                 moveToDefender("#thor");
             }
         }
+    });
+
+    $("#attack").on("click", function () {
+        $("#restart").show();
+    });
+
+    $("#restart").on("click", function () {
+        initGame();
     });
 
 });
