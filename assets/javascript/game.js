@@ -132,6 +132,13 @@ $( document ).ready(function() {
     });
 
     $("#attack").on("click", function () {
+        if(playerSelected == true && defenderSelected == true && !gamePlaying){
+
+        } else if(playerSelected == true && defenderSelected == false && !gamePlaying) {
+
+        } else if(playerSelected == false && !gamePlaying) {
+
+        }
         $("#restart").show();
     });
 
