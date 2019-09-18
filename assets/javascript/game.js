@@ -5,7 +5,8 @@ $( document ).ready(function() {
     var gamePlaying = false;
     var currentPlayer = {};
     var defendingPlayer = {};
-    var totalDefeted;
+    var count = 0;
+    var totalDefeted = 0;
 
     class Character {
         constructor(name, healthPoints, attackPower, counterAttackPower) {
@@ -34,6 +35,13 @@ $( document ).ready(function() {
 
         $(".character").removeClass("character-selected enemy-character defender-character").addClass("character-selection");
         $("#my-characters").html($(".character-selection").show());
+
+        $("#captain-america").children(".health").html(captainAmerica.healthPoints);
+        $("#hulk").children(".health").html(hulk.healthPoints);
+        $("#iron-man").children(".health").html(ironMan.healthPoints);
+        $("#thor").children(".health").html(thor.healthPoints);
+
+        $("#game-message").html("<p>Select a character.</p>");
 
         $("#restart").hide();
     }
@@ -73,6 +81,12 @@ $( document ).ready(function() {
         defenderSelected = true;
     }
 
+    var incrementAttackPower = function(attackPower){
+        count++;
+        return attackPower * count;
+
+    }
+
     $("#restart").hide();
 
     $("#captain-america").on("click", function () {
@@ -80,6 +94,8 @@ $( document ).ready(function() {
             moveToCharacter("#captain-america");
             moveToEnemies();
             initMyPlayer(captainAmerica);
+            $("#game-message").empty();
+            $("#game-message").html("<p>Select an enemy to fight.</p>");
         } else if(playerSelected == true && !defenderSelected) {
             if($("#captain-america").hasClass("enemy-character")) {
                 console.log("Defender selcted");
@@ -133,11 +149,14 @@ $( document ).ready(function() {
 
     $("#attack").on("click", function () {
         if(playerSelected == true && defenderSelected == true && !gamePlaying){
-
-        } else if(playerSelected == true && defenderSelected == false && !gamePlaying) {
-
-        } else if(playerSelected == false && !gamePlaying) {
-
+            defendingPlayer.healthPoints = defendingPlayer.healthPoints - incrementAttackPower(currentPlayer.attackPower);
+            $(".defender-character").children(".health").html(defendingPlayer.healthPoints);
+            currentPlayer.healthPoints = currentPlayer.healthPoints - defendingPlayer.counterAttackPower;
+            $(".character-selected").children(".health").html(currentPlayer.healthPoints);
+        } else if(playerSelected == true && !defenderSelected && !gamePlaying) {
+            $("#game-message").html("<p>You must choose an enemy to fight.</p>");
+        } else if(!playerSelected && !gamePlaying) {
+            $("#game-message").html("<p>You must first select your game character.</p>");
         }
         $("#restart").show();
     });
