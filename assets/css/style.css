@@ -47,6 +47,10 @@ h3 {
     background: red;
 }
 
+.defender-character {
+    background-color: red;
+}
+
 #game-message {
     color: white;
 }
