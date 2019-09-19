@@ -1,5 +1,6 @@
 $( document ).ready(function() {
 
+    // Variable declaration
     var playerSelected;
     var defenderSelected;
     var gamePlaying = false;
@@ -9,6 +10,7 @@ $( document ).ready(function() {
     var totalDefeted = 0;
     var i = 0;
 
+    //Class with a constructor
     class Character {
         constructor(name, healthPoints, attackPower, counterAttackPower) {
             this.name = name;
@@ -18,6 +20,7 @@ $( document ).ready(function() {
         }
     }
 
+    // Instanciating 4 objects 1 for each character using the new keyword
     var captainAmerica = new Character("Captain Aerica", 120, 8, 8);
 
     var hulk = new Character("Hulk", 130, 5, 5);
@@ -26,6 +29,7 @@ $( document ).ready(function() {
 
     var thor = new Character("Thor", 125, 15, 15);
 
+    // This fucntion resets the game back to orignal state
     function initGame() {
         playerSelected = undefined;
         defenderSelected = undefined;
@@ -50,6 +54,7 @@ $( document ).ready(function() {
         $("#restart").hide();
     }
 
+    // Initialize the character selected by the user
     function initMyPlayer(mySelectedPlayer){
         currentPlayer.name = mySelectedPlayer.name;
         currentPlayer.healthPoints = mySelectedPlayer.healthPoints;
@@ -57,6 +62,7 @@ $( document ).ready(function() {
         currentPlayer.counterAttackPower = mySelectedPlayer.counterAttackPower;
     }
 
+    // Initialize the enemy selected by the user
     function initMyCurrentEnemy(mySelectedEnemy){
         defendingPlayer.name = mySelectedEnemy.name;
         defendingPlayer.healthPoints = mySelectedEnemy.healthPoints;
@@ -64,6 +70,7 @@ $( document ).ready(function() {
         defendingPlayer.counterAttackPower= mySelectedEnemy.counterAttackPower;
     }
 
+    // Moves the selected character to your selected character
     function moveToCharacter(playerID){
         if(!playerSelected){
             console.log("inside movecharacter if");
@@ -74,24 +81,29 @@ $( document ).ready(function() {
         }
     }
 
+    // Moves the remaining characters to enemies
     function moveToEnemies(){
         $(".character-selection").removeClass("character-selection").addClass("enemy-character");
         $("#enemies-available").append($(".enemy-character"));
     }
 
+    // Moves the enemy character selected by the user
     function moveToDefender(playerID){
         $(playerID).removeClass("enemy-character").addClass("defender-character");
         $("#defender-section").append($(".defender-character"));
         defenderSelected = true;
     }
 
+    // Increments attack
     var incrementAttackPower = function(attackPower){
         count++;
         return attackPower * count;
     }
 
+    // Hide restart button
     $("#restart").hide();
 
+    // Below function selects character/enemy
     $("#captain-america").on("click", function () {
         if(!playerSelected){
             moveToCharacter("#captain-america");
@@ -104,52 +116,66 @@ $( document ).ready(function() {
                 console.log("Defender selcted");
                 initMyCurrentEnemy(captainAmerica);
                 moveToDefender("#captain-america");
+                $("#game-message").empty();
             }
         }
     });
     
+    // Below function selects character/enemy
     $("#hulk").on("click", function () {
         if(!playerSelected){
             moveToCharacter("#hulk");
             moveToEnemies();
             initMyPlayer(hulk);
+            $("#game-message").empty();
+            $("#game-message").html("<p>Select an enemy to fight.</p>");
         } else if(playerSelected == true && !defenderSelected) {
             if($("#hulk").hasClass("enemy-character")) {
                 console.log("Defender selcted");
                 initMyCurrentEnemy(hulk);
                 moveToDefender("#hulk");
+                $("#game-message").empty();
             }
         }
     });
     
+    // Below function selects character/enemy
     $("#iron-man").on("click", function () {
         if(!playerSelected){
             moveToCharacter("#iron-man");
             moveToEnemies();
             initMyPlayer(ironMan);
+            $("#game-message").empty();
+            $("#game-message").html("<p>Select an enemy to fight.</p>");
         } else if(playerSelected == true && !defenderSelected) {
             if($("#iron-man").hasClass("enemy-character")) {
                 console.log("Defender selcted");
                 initMyCurrentEnemy(ironMan);
                 moveToDefender("#iron-man");
+                $("#game-message").empty();
             }
         }
     });
 
+    // Below function selects character/enemy
     $("#thor").on("click", function () {
         if(!playerSelected){
             moveToCharacter("#thor");
             moveToEnemies();
             initMyPlayer(thor);
+            $("#game-message").empty();
+            $("#game-message").html("<p>Select an enemy to fight.</p>");
         } else if(playerSelected == true && !defenderSelected) {
             if($("#thor").hasClass("enemy-character")) {
                 console.log("Defender selcted");
                 initMyCurrentEnemy(thor);
                 moveToDefender("#thor");
+                $("#game-message").empty();
             }
         }
     });
 
+    // Function executed when user clicks attack
     $("#attack").on("click", function () {
         i++;
         if(playerSelected == true && defenderSelected == true && !gamePlaying){
@@ -190,6 +216,7 @@ $( document ).ready(function() {
         }
     });
 
+    // restarts game by calling the initGame() function
     $("#restart").on("click", function () {
         initGame();
     });
